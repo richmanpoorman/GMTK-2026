@@ -1,0 +1,4 @@
+[gd_resource type="Resource" format=3 uid="uid://i1632vi2u1r6"]
+
+[resource]
+metadata/canHit = PackedStringArray()

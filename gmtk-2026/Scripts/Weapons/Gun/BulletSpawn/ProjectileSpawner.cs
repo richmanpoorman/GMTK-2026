@@ -14,12 +14,12 @@ public partial class ProjectileSpawner : Node2D
 	[Export] 
 	public float spawnpointRadius = 50; 
 
-	public AnimatedSprite2D spawnpointAnimation;
+	public AnimationTree animator;
 
     public override void _Ready()
     {
         bulletSpawnPoint.Position = new Vector2(spawnpointRadius, 0); 
-		spawnpointAnimation = bulletSpawnPoint.GetNode<AnimatedSprite2D>("SpawnpointAnimator");
+		animator = bulletSpawnPoint.GetNode<AnimationTree>("AnimationTree");
     }
 
 

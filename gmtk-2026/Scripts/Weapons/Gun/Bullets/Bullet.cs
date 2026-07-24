@@ -17,12 +17,11 @@ public partial class BulletSpawnData : RefCounted
 }
 public partial class Bullet : CharacterBody2D
 {
-
+    private Collidable collidable; 
+    private Timed timed; 
 
     private Node2D owner; 
     private float duration = 0.1f;
-    private Collidable collidable; 
-    private Timed timed; 
     private string[] canHit; 
     private float speed; 
     private float damage; 
@@ -35,12 +34,14 @@ public partial class Bullet : CharacterBody2D
         speed    = data.speed; 
         canHit   = data.canHit; 
         damage   = data.damage; 
+        size     = data.size; 
     }
     public void setSpawnData(BulletSpawnData data)
     {
         this.Position = data.position; 
         this.Rotation = data.rotation; 
         this.Velocity = new Vector2(speed, 0).Rotated(data.rotation);
+        this.Scale = new Vector2(size, size); 
     }
     public override void _Ready()
     {

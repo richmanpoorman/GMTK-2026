@@ -29,7 +29,7 @@ public partial class PlayerController : Node2D
 
 	private void checkGun()
 	{
-		if (Input.IsActionPressed("shoot")) 
+		if (Input.IsActionJustPressed("shoot")) 
 			EmitSignal(SignalName.OnPlayerChargeGun, player);
 		
 		if (Input.IsActionJustReleased("shoot"))

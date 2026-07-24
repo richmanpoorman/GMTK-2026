@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_s8fuf"]
 [ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="2_kqu1f"]
 [ext_resource type="PackedScene" uid="uid://douwfwt1rmmfn" path="res://Prefabs/Property/movable.tscn" id="4_iisa0"]
-[ext_resource type="Script" path="res://Scripts/CreateProjectile.cs" id="5_2qbj0"]
+[ext_resource type="Script" path="res://Scripts/CreatePlayerProjectile.cs" id="4_wijdu"]
 [ext_resource type="PackedScene" uid="uid://dv6umjrp6uurl" path="res://Prefabs/Projectile/projectile_spawner.tscn" id="5_vc885"]
 [ext_resource type="PackedScene" uid="uid://dm6omeoevdlwu" path="res://Prefabs/Projectile/bullet.tscn" id="6_qpwj7"]
 [ext_resource type="PackedScene" uid="uid://bcgkttqmvf4n1" path="res://Prefabs/Property/collidable.tscn" id="8_3fppw"]
@@ -26,7 +26,6 @@ radius = 31.1448
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(-1, 1)
 script = ExtResource("1_s8fuf")
-canHit = PackedStringArray("enemy")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -42,13 +41,13 @@ script = ExtResource("2_kqu1f")
 
 [node name="Movable" parent="." instance=ExtResource("4_iisa0")]
 
-[node name="CreateProjectile" type="Node2D" parent="." node_paths=PackedStringArray("spawner")]
-script = ExtResource("5_2qbj0")
+[node name="CreateProjectile" type="Node2D" parent="."]
+script = ExtResource("4_wijdu")
 bulletPrefab = ExtResource("6_qpwj7")
-spawner = NodePath("../ProjectileSpawner")
 
 [node name="ProjectileSpawner" parent="." instance=ExtResource("5_vc885")]
 
 [node name="Collidable" parent="." instance=ExtResource("8_3fppw")]
 
+[connection signal="OnPlayerChargeGun" from="Controller" to="CreateProjectile" method="onCharge"]
 [connection signal="OnPlayerFireGun" from="Controller" to="CreateProjectile" method="onFire"]

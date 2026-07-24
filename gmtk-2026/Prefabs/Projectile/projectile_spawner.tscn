@@ -1,21 +1,331 @@
-[gd_scene load_steps=4 format=3 uid="uid://dv6umjrp6uurl"]
+[gd_scene load_steps=17 format=3 uid="uid://dv6umjrp6uurl"]
 
 [ext_resource type="Script" path="res://Scripts/Weapons/Gun/BulletSpawn/ProjectileSpawner.cs" id="1_86lua"]
 [ext_resource type="Texture2D" uid="uid://d2h6xbh1gxl1q" path="res://Art/icon.svg" id="2_bp0i8"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_eg6uc"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_bp0i8")
-}],
-"loop": true,
-"name": &"Gun",
-"speed": 5.0
-}]
+[sub_resource type="Animation" id="Animation_u811q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.12, 0.12)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_glgrf"]
+resource_name = "FullyChargedGun"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.24, 0.24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0261799, 0.0, -0.0261799, 0.0, 0.0, 0.0261799, 0.0, -0.0261799, 0.0, 0.0, 0.0261799, 0.0, -0.0261799, 0.0, 0.0, 0.0261799, 0.0, -0.0261799, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1, -1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1), Vector2(0, 0), Vector2(-1, -1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1), Vector2(0, 0), Vector2(-1, -1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1), Vector2(0, 0), Vector2(-1, -1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(2, 2, 2, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_edxnv"]
+resource_name = "FireGun"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.166667, 0.2),
+"transitions": PackedFloat32Array(0.450627, 0.887657, 5.46416, 1),
+"update": 0,
+"values": [Vector2(0.24, 0.24), Vector2(0.3, 0.3), Vector2(0.08, 0.08), Vector2(0.12, 0.12)]
+}
+
+[sub_resource type="Animation" id="Animation_6yvbs"]
+resource_name = "IdleGun"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.12, 0.12)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:skew")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ywjmk"]
+resource_name = "ChargeGun"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 4.14106),
+"update": 0,
+"values": [Vector2(0.12, 0.12), Vector2(0.24, 0.24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0334333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.233433, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.433433, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.633433, 0.666667, 0.7, 0.733333, 0.766667, 0.8, 0.833333, 0.833433, 0.866667, 0.9, 0.933333, 0.966667, 1, 1.03333, 1.03343, 1.06667, 1.1, 1.13333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.0174533, -0.0872665, 0.0523599, -0.0349066, 0.10472, 0.0, 0.0, -0.0174533, -0.0872665, 0.0523599, -0.0349066, 0.10472, 0.0, 0.0, -0.0174533, -0.0872665, 0.0523599, -0.0349066, 0.10472, 0.0, 0.0, -0.0174533, -0.0872665, 0.0523599, -0.0349066, 0.10472, 0.0, 0.0, -0.0174533, -0.0872665, 0.0523599, -0.0349066, 0.10472, 0.0, 0.0, -0.0174533, -0.0872665, 0.0523599, -0.0349066, 0.10472]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.1, 0.133333, 0.166667, 0.2, 0.233333, 0.266667, 0.3, 0.333333, 0.366667, 0.4, 0.433333, 0.466667, 0.5, 0.533333, 0.566667, 0.6, 0.633333, 0.666667, 0.7, 0.733333, 0.766667, 0.8, 0.833333, 0.866667, 0.9, 0.933333, 0.966667, 1, 1.03333, 1.06667, 1.1, 1.13333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-0.1, 0.1), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-0.1, -0.1), Vector2(-0.1, 0.1), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-0.1, -0.1), Vector2(-0.1, 0.1), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-0.1, -0.1), Vector2(-0.1, 0.1), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-0.1, -0.1), Vector2(-0.1, 0.1), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-0.1, -0.1), Vector2(-0.1, 0.1), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-0.1, -0.1), Vector2(-0.1, 0.1), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(-0.1, -0.1)]
+}
+
+[sub_resource type="Animation" id="Animation_2i6v2"]
+resource_name = "ChargeGun"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.566667, 0.6, 0.933333, 1.06667, 1.16667, 1.2, 1.5, 1.63333, 1.73333, 1.8),
+"transitions": PackedFloat32Array(1, 1, 3.73213, 4.43828, 1, 1, 3.73213, 4.43828, 1, 1, 3.73213, 4.43828, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.174533, -0.174533, 0.0, 0.0, 0.261799, -0.261799, 0.0, 0.0, 0.349066, -0.349066, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.566667, 0.6, 0.966667, 1.1, 1.16667, 1.2, 1.56667, 1.7, 1.76667, 1.8),
+"transitions": PackedFloat32Array(1, 1, 3.24901, 4.92458, 1, 1, 1, 4.92458, 1, 1, 3.24901, 4.92458, 1),
+"update": 0,
+"values": [Vector2(0.12, 0.12), Vector2(0.12, 0.12), Vector2(0.19, 0.19), Vector2(0.15, 0.15), Vector2(0.16, 0.16), Vector2(0.16, 0.16), Vector2(0.22, 0.22), Vector2(0.18, 0.18), Vector2(0.2, 0.2), Vector2(0.2, 0.2), Vector2(0.27, 0.27), Vector2(0.21, 0.21), Vector2(0.24, 0.24)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wuu6v"]
+_data = {
+"ChargeGun": SubResource("Animation_2i6v2"),
+"ChargeGunOld": SubResource("Animation_ywjmk"),
+"FireGun": SubResource("Animation_edxnv"),
+"FullyChargedGun": SubResource("Animation_glgrf"),
+"IdleGun": SubResource("Animation_6yvbs"),
+"RESET": SubResource("Animation_u811q")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yidmu"]
+animation = &"ChargeGun"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_i3rmf"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_njb5d"]
+animation = &"FireGun"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_01rhn"]
+animation = &"FullyChargedGun"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_372pp"]
+animation = &"IdleGun"
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_6q4ux"]
+input_0/name = "charge"
+input_0/auto_advance = true
+input_0/break_loop_at_end = true
+input_0/reset = true
+input_1/name = "fully_charge"
+input_1/auto_advance = false
+input_1/break_loop_at_end = true
+input_1/reset = true
+input_2/name = "fire"
+input_2/auto_advance = true
+input_2/break_loop_at_end = true
+input_2/reset = true
+input_3/name = "idle"
+input_3/auto_advance = false
+input_3/break_loop_at_end = true
+input_3/reset = true
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pr0vg"]
+graph_offset = Vector2(-310.476, 22.196)
+nodes/charge_anim/node = SubResource("AnimationNodeAnimation_yidmu")
+nodes/charge_anim/position = Vector2(80, 20)
+nodes/charge_time_scale/node = SubResource("AnimationNodeTimeScale_i3rmf")
+nodes/charge_time_scale/position = Vector2(260, 20)
+nodes/fire_anim/node = SubResource("AnimationNodeAnimation_njb5d")
+nodes/fire_anim/position = Vector2(80, 340)
+nodes/fully_charge_anim/node = SubResource("AnimationNodeAnimation_01rhn")
+nodes/fully_charge_anim/position = Vector2(80, 180)
+nodes/idle_anim/node = SubResource("AnimationNodeAnimation_372pp")
+nodes/idle_anim/position = Vector2(80, 500)
+nodes/output/position = Vector2(720, 100)
+nodes/transition/node = SubResource("AnimationNodeTransition_6q4ux")
+nodes/transition/position = Vector2(560, 100)
+node_connections = [&"charge_time_scale", 0, &"charge_anim", &"output", 0, &"transition", &"transition", 0, &"charge_time_scale", &"transition", 1, &"fully_charge_anim", &"transition", 2, &"fire_anim", &"transition", 3, &"idle_anim"]
 
 [node name="ProjectileSpawner" type="Node2D" node_paths=PackedStringArray("bulletAnchorPoint", "bulletSpawnPoint")]
-position = Vector2(1, 1)
 script = ExtResource("1_86lua")
 bulletAnchorPoint = NodePath("Anchor")
 bulletSpawnPoint = NodePath("Anchor/Spawnpoint")
@@ -25,7 +335,21 @@ bulletSpawnPoint = NodePath("Anchor/Spawnpoint")
 [node name="Spawnpoint" type="Node2D" parent="Anchor"]
 position = Vector2(50, 0)
 
-[node name="SpawnpointAnimator" type="AnimatedSprite2D" parent="Anchor/Spawnpoint"]
+[node name="Sprite" type="Sprite2D" parent="Anchor/Spawnpoint"]
 scale = Vector2(0.12, 0.12)
-sprite_frames = SubResource("SpriteFrames_eg6uc")
-animation = &"Gun"
+texture = ExtResource("2_bp0i8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Anchor/Spawnpoint"]
+root_node = NodePath("../Sprite")
+libraries = {
+"": SubResource("AnimationLibrary_wuu6v")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Anchor/Spawnpoint"]
+root_node = NodePath("../Sprite")
+tree_root = SubResource("AnimationNodeBlendTree_pr0vg")
+anim_player = NodePath("../AnimationPlayer")
+parameters/charge_time_scale/scale = 0.72
+parameters/transition/current_state = "idle"
+parameters/transition/transition_request = ""
+parameters/transition/current_index = 3
