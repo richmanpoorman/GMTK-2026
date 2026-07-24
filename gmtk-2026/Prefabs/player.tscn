@@ -1,0 +1,54 @@
+[gd_scene load_steps=11 format=3 uid="uid://d2h6yv4ixph4v"]
+
+[ext_resource type="Texture2D" uid="uid://d2h6xbh1gxl1q" path="res://Art/icon.svg" id="1_kwnv5"]
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_s8fuf"]
+[ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="2_kqu1f"]
+[ext_resource type="PackedScene" uid="uid://douwfwt1rmmfn" path="res://Prefabs/Property/movable.tscn" id="4_iisa0"]
+[ext_resource type="Script" path="res://Scripts/CreateProjectile.cs" id="5_2qbj0"]
+[ext_resource type="PackedScene" uid="uid://dv6umjrp6uurl" path="res://Prefabs/Projectile/projectile_spawner.tscn" id="5_vc885"]
+[ext_resource type="PackedScene" uid="uid://dm6omeoevdlwu" path="res://Prefabs/Projectile/bullet.tscn" id="6_qpwj7"]
+[ext_resource type="PackedScene" uid="uid://bcgkttqmvf4n1" path="res://Prefabs/Property/collidable.tscn" id="8_3fppw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2c84x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kwnv5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7ef8q"]
+radius = 31.1448
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+position = Vector2(-1, 1)
+script = ExtResource("1_s8fuf")
+canHit = PackedStringArray("enemy")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_2c84x")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7ef8q")
+
+[node name="Controller" type="Node2D" parent="."]
+script = ExtResource("2_kqu1f")
+
+[node name="Movable" parent="." instance=ExtResource("4_iisa0")]
+
+[node name="CreateProjectile" type="Node2D" parent="." node_paths=PackedStringArray("spawner")]
+script = ExtResource("5_2qbj0")
+bulletPrefab = ExtResource("6_qpwj7")
+spawner = NodePath("../ProjectileSpawner")
+
+[node name="ProjectileSpawner" parent="." instance=ExtResource("5_vc885")]
+
+[node name="Collidable" parent="." instance=ExtResource("8_3fppw")]
+
+[connection signal="OnPlayerFireGun" from="Controller" to="CreateProjectile" method="onFire"]

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj72vhfwr0o1a"]
+
+[ext_resource type="Script" path="res://Scripts/Weapons/Gun/Bullets/DestroyOnCollide.cs" id="1_p1t4n"]
+
+[node name="DestroyOnCollide" type="Node2D" node_paths=PackedStringArray("destructable")]
+script = ExtResource("1_p1t4n")
+destructable = NodePath("")

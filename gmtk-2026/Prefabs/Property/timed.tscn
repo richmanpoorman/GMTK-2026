@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca2y135wi48dg"]
+
+[ext_resource type="Script" path="res://Scripts/Weapons/Gun/Bullets/Timed.cs" id="1_05b23"]
+
+[node name="Timed" type="Node2D"]
+script = ExtResource("1_05b23")

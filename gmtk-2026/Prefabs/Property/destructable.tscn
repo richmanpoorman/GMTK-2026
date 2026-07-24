@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8de8uhngd16t"]
+
+[ext_resource type="Script" path="res://Scripts/Weapons/Gun/Bullets/Destructable.cs" id="1_8qp3i"]
+
+[node name="Destructable" type="Node2D"]
+script = ExtResource("1_8qp3i")

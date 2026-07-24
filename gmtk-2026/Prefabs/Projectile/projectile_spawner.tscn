@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv6umjrp6uurl"]
+
+[ext_resource type="Script" path="res://Scripts/Weapons/Gun/BulletSpawn/ProjectileSpawner.cs" id="1_86lua"]
+[ext_resource type="Texture2D" uid="uid://d2h6xbh1gxl1q" path="res://Art/icon.svg" id="2_bp0i8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eg6uc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bp0i8")
+}],
+"loop": true,
+"name": &"Gun",
+"speed": 5.0
+}]
+
+[node name="ProjectileSpawner" type="Node2D" node_paths=PackedStringArray("bulletAnchorPoint", "bulletSpawnPoint")]
+position = Vector2(1, 1)
+script = ExtResource("1_86lua")
+bulletAnchorPoint = NodePath("Anchor")
+bulletSpawnPoint = NodePath("Anchor/Spawnpoint")
+
+[node name="Anchor" type="Node2D" parent="."]
+
+[node name="Spawnpoint" type="Node2D" parent="Anchor"]
+position = Vector2(50, 0)
+
+[node name="SpawnpointAnimator" type="AnimatedSprite2D" parent="Anchor/Spawnpoint"]
+scale = Vector2(0.12, 0.12)
+sprite_frames = SubResource("SpriteFrames_eg6uc")
+animation = &"Gun"
