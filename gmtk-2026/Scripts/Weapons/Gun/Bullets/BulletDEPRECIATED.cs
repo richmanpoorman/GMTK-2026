@@ -15,7 +15,7 @@ public partial class BulletSpawnData : RefCounted
 	public Vector2 position; 
 	public float rotation;
 }
-public partial class Bullet : CharacterBody2D
+public partial class BulletDEPRECIATED : CharacterBody2D
 {
     private Collidable collidable; 
     private Timed timed; 

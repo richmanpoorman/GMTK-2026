@@ -1,36 +1,36 @@
 using Godot;
 using System;
 
-public partial class Player : CharacterBody2D
+public partial class Player : CharacterBody2D, Shooter
 {
 
-    [ExportGroup("Player Settings")]
-    [Export]
-    public string[] canCollide = {"enemy"};
-
     [ExportGroup("Bullet Settings")]
-    [Export]
-    public string[] canHit = {"enemy"}; 
-    [Export]
-    public float duration = 1f; 
+    [Export] 
+    public PackedScene bullet; 
     [Export]
     public float damage = 10; 
     [Export]
-    public float speed = 400; 
-    [Export]
-    public float size = 1; 
+    public float range = 400; 
 
-    public BulletInitializationData bulletValues;  
 
-    private Collidable collidable; 
-    public override void _Ready()
+    public Bullet createProjectile()
     {
-        collidable = GetNode<Collidable>("Collidable");
-        collidable.setCollideWith(canCollide);
-        bulletValues = new BulletInitializationData
+        AttackData data = new AttackData
         {
-            canHit = canHit, damage = damage, duration = duration, owner = this, size = size, speed = speed 
+            {"damage", damage}, 
+            {"range" , range }
         }; 
+
+        Bullet shootable = bullet.Instantiate<Bullet>(); 
+        shootable.init(this, data); 
+        return shootable; 
     }
+
+    public void onProjectileHit(Projectile projectile, Shootable shootable, Vector2 collisionPosition, Vector2 collisionNormal)
+    {
+        throw new NotImplementedException();
+    }
+
+
 
 }

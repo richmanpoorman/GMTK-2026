@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://douwfwt1rmmfn" path="res://Prefabs/Property/movable.tscn" id="4_iisa0"]
 [ext_resource type="Script" path="res://Scripts/CreatePlayerProjectile.cs" id="4_wijdu"]
 [ext_resource type="PackedScene" uid="uid://dv6umjrp6uurl" path="res://Prefabs/Projectile/projectile_spawner.tscn" id="5_vc885"]
-[ext_resource type="PackedScene" uid="uid://dm6omeoevdlwu" path="res://Prefabs/Projectile/bullet.tscn" id="6_qpwj7"]
+[ext_resource type="PackedScene" uid="uid://b3cgl6374l6nj" path="res://Prefabs/raycast_bullet.tscn" id="6_dhour"]
 [ext_resource type="PackedScene" uid="uid://bcgkttqmvf4n1" path="res://Prefabs/Property/collidable.tscn" id="8_3fppw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2c84x"]
@@ -26,6 +26,7 @@ radius = 31.1448
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(-1, 1)
 script = ExtResource("1_s8fuf")
+bullet = ExtResource("6_dhour")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -43,9 +44,30 @@ script = ExtResource("2_kqu1f")
 
 [node name="CreateProjectile" type="Node2D" parent="."]
 script = ExtResource("4_wijdu")
-bulletPrefab = ExtResource("6_qpwj7")
 
 [node name="ProjectileSpawner" parent="." instance=ExtResource("5_vc885")]
+
+[node name="PlayerMelee" type="Node2D" parent="."]
+
+[node name="Anchor" type="Node2D" parent="PlayerMelee"]
+
+[node name="Level1" type="Area2D" parent="PlayerMelee/Anchor"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerMelee/Anchor/Level1"]
+polygon = PackedVector2Array(0, 0, 2, 1, 2, -1)
+disabled = true
+
+[node name="Level2" type="Area2D" parent="PlayerMelee/Anchor"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerMelee/Anchor/Level2"]
+polygon = PackedVector2Array(2, 1, 2, -1, 4, -2, 4, 2)
+disabled = true
+
+[node name="Level3" type="Area2D" parent="PlayerMelee/Anchor"]
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="PlayerMelee/Anchor/Level3"]
+polygon = PackedVector2Array(4, -2, 4, 2, 6, 3, 6, -3)
+disabled = true
 
 [node name="Collidable" parent="." instance=ExtResource("8_3fppw")]
 

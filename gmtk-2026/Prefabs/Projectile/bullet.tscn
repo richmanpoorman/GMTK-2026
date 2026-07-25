@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dm6omeoevdlwu"]
+[gd_scene load_steps=8 format=3 uid="uid://dm6omeoevdlwu"]
 
 [ext_resource type="Script" path="res://Scripts/Weapons/Gun/Bullets/Bullet.cs" id="1_u6gtg"]
 [ext_resource type="PackedScene" uid="uid://ca2y135wi48dg" path="res://Prefabs/Property/timed.tscn" id="2_7dubi"]
 [ext_resource type="PackedScene" uid="uid://b8de8uhngd16t" path="res://Prefabs/Property/destructable.tscn" id="3_m3gjc"]
 [ext_resource type="PackedScene" uid="uid://bj72vhfwr0o1a" path="res://Prefabs/Property/destroy_on_collide.tscn" id="4_p0lp8"]
-[ext_resource type="PackedScene" uid="uid://bcgkttqmvf4n1" path="res://Prefabs/Property/collidable.tscn" id="5_lwr3v"]
 [ext_resource type="PackedScene" uid="uid://byauo5f4neqtm" path="res://Prefabs/Property/destroy_on_timeout.tscn" id="6_or6da"]
 [ext_resource type="Texture2D" uid="uid://d2h6xbh1gxl1q" path="res://Art/icon.svg" id="7_n67cn"]
 
@@ -22,8 +21,6 @@ shape = SubResource("CircleShape2D_8mmli")
 
 [node name="DestroyOnCollide" parent="." instance=ExtResource("4_p0lp8")]
 
-[node name="Collidable" parent="." instance=ExtResource("5_lwr3v")]
-
 [node name="DestroyOnTimeout" parent="." instance=ExtResource("6_or6da")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -31,4 +28,3 @@ scale = Vector2(0.105, 0.105)
 texture = ExtResource("7_n67cn")
 
 [connection signal="OnTimeout" from="Timed" to="DestroyOnTimeout" method="onTimeout"]
-[connection signal="OnCollision" from="Collidable" to="DestroyOnCollide" method="onCollision"]

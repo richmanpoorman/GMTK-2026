@@ -12,14 +12,18 @@ public partial class ProjectileSpawner : Node2D
 	public Node2D bulletSpawnPoint; 
 
 	[Export] 
-	public float spawnpointRadius = 50; 
+	public float SPAWNPOINT_RADIUS = 50; 
 
 	public AnimationTree animator;
+	
+	private Shooter shooter; 
 
     public override void _Ready()
     {
-        bulletSpawnPoint.Position = new Vector2(spawnpointRadius, 0); 
+        bulletSpawnPoint.Position = new Vector2(SPAWNPOINT_RADIUS, 0); 
 		animator = bulletSpawnPoint.GetNode<AnimationTree>("AnimationTree");
+		if (GetParent<Node2D>() is Shooter _shooter) shooter = _shooter;  
+		else Assert.Failed("The parent of a projectile spawner is NOT a shooter"); 
     }
 
 
@@ -35,13 +39,14 @@ public partial class ProjectileSpawner : Node2D
 		bulletAnchorPoint.Rotation = directionVector.Angle(); 
 	}
 
-	public void spawnProjectile(Bullet bullet)
+	public Bullet spawnProjectile()
 	{
-		bullet.setSpawnData(new BulletSpawnData {
-			position = bulletSpawnPoint.GlobalPosition, 
-			rotation = bulletAnchorPoint.Rotation
-		});
+
+		Bullet bullet = shooter.createProjectile(); 
+		bullet.Position = bulletSpawnPoint.GlobalPosition; 
+		bullet.Rotation = bulletSpawnPoint.GlobalRotation;
 		GetTree().CurrentScene.AddChild(bullet);
+		return bullet; 
 	}
 
 }

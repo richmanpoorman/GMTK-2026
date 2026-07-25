@@ -3,10 +3,6 @@ using System;
 
 public partial class CreatePlayerProjectile : Node2D
 {
-	
-	[Export]
-	public PackedScene bulletPrefab; 
-	
 	[Export]
 	public float maxChargeTime = 3f;
 	
@@ -31,8 +27,6 @@ public partial class CreatePlayerProjectile : Node2D
 	public void onFire(Node2D owner)
 	{
 		spawner.animator.Set("parameters/transition/transition_request", "fire");
-		Bullet bullet = bulletPrefab.Instantiate<Bullet>(); 
-		bullet.init(player.bulletValues); 
-		spawner.spawnProjectile(bullet);
+		spawner.spawnProjectile();
 	}
 }

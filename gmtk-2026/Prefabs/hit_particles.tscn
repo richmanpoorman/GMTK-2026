@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://cgmeuw6kscx3v"]
+
+[ext_resource type="Script" path="res://Scripts/DeleteOnFinish.cs" id="1_f4vbe"]
+
+[sub_resource type="Curve" id="Curve_a23g5"]
+_data = [Vector2(0.506667, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_qyktp"]
+curve = SubResource("Curve_a23g5")
+
+[sub_resource type="Gradient" id="Gradient_bt172"]
+offsets = PackedFloat32Array(0, 0.229508, 0.762295, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0, 0, 1, 1, 0.384314, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ewxpn"]
+gradient = SubResource("Gradient_bt172")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1naux"]
+particle_flag_disable_z = true
+angle_min = 1.07288e-05
+angle_max = 31.0
+initial_velocity_min = 32.26
+initial_velocity_max = 64.52
+angular_velocity_min = -193.55
+angular_velocity_max = 162.58
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = -2.23517e-05
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -68.82
+linear_accel_max = -54.83
+radial_accel_min = -2.23517e-06
+radial_accel_max = 70.96
+color_ramp = SubResource("GradientTexture1D_ewxpn")
+alpha_curve = SubResource("CurveTexture_qyktp")
+hue_variation_min = -0.05
+hue_variation_max = 0.15
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+emitting = false
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_1naux")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+script = ExtResource("1_f4vbe")
+
+[connection signal="finished" from="." to="." method="onFinish"]
