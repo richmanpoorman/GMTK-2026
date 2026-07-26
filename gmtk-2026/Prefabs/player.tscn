@@ -1,13 +1,19 @@
-[gd_scene load_steps=11 format=3 uid="uid://d2h6yv4ixph4v"]
+[gd_scene load_steps=17 format=3 uid="uid://d2h6yv4ixph4v"]
 
 [ext_resource type="Texture2D" uid="uid://d2h6xbh1gxl1q" path="res://Art/icon.svg" id="1_kwnv5"]
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_s8fuf"]
 [ext_resource type="Script" path="res://Scripts/PlayerController.cs" id="2_kqu1f"]
-[ext_resource type="PackedScene" uid="uid://douwfwt1rmmfn" path="res://Prefabs/Property/movable.tscn" id="4_iisa0"]
+[ext_resource type="Script" path="res://Scripts/Movable.cs" id="4_5tp5c"]
 [ext_resource type="Script" path="res://Scripts/CreatePlayerProjectile.cs" id="4_wijdu"]
 [ext_resource type="PackedScene" uid="uid://dv6umjrp6uurl" path="res://Prefabs/Projectile/projectile_spawner.tscn" id="5_vc885"]
-[ext_resource type="PackedScene" uid="uid://b3cgl6374l6nj" path="res://Prefabs/raycast_bullet.tscn" id="6_dhour"]
-[ext_resource type="PackedScene" uid="uid://bcgkttqmvf4n1" path="res://Prefabs/Property/collidable.tscn" id="8_3fppw"]
+[ext_resource type="PackedScene" uid="uid://b3cgl6374l6nj" path="res://Prefabs/player_raycast_bullet.tscn" id="6_jno32"]
+[ext_resource type="Script" path="res://Scripts/PlayerContacter.cs" id="8_1mqaf"]
+[ext_resource type="Script" path="res://Scripts/PlayerTimer.cs" id="9_y2gm2"]
+[ext_resource type="Script" path="res://Scripts/PlayerShootable.cs" id="10_hg03b"]
+[ext_resource type="PackedScene" uid="uid://cy2uywyyg0bdu" path="res://Prefabs/afterimage.tscn" id="11_ns1gc"]
+[ext_resource type="Script" path="res://Scripts/Dash.cs" id="11_o20x7"]
+[ext_resource type="PackedScene" uid="uid://bucejtjdoyltu" path="res://Prefabs/time_dropper.tscn" id="12_5mt7w"]
+[ext_resource type="Script" path="res://Scripts/PlayerScore.cs" id="14_xx7h8"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2c84x"]
 animations = [{
@@ -23,10 +29,13 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_7ef8q"]
 radius = 31.1448
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("timer", "shooter", "contacter", "scorer") groups=["player"]]
 position = Vector2(-1, 1)
 script = ExtResource("1_s8fuf")
-bullet = ExtResource("6_dhour")
+timer = NodePath("PlayerTimer")
+shooter = NodePath("PlayerShooter")
+contacter = NodePath("PlayerContacter")
+scorer = NodePath("PlayerScore")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -37,39 +46,51 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_7ef8q")
 
-[node name="Controller" type="Node2D" parent="."]
-script = ExtResource("2_kqu1f")
-
-[node name="Movable" parent="." instance=ExtResource("4_iisa0")]
-
-[node name="CreateProjectile" type="Node2D" parent="."]
-script = ExtResource("4_wijdu")
+[node name="Movable" type="Node2D" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("4_5tp5c")
+body = NodePath("..")
 
 [node name="ProjectileSpawner" parent="." instance=ExtResource("5_vc885")]
 
-[node name="PlayerMelee" type="Node2D" parent="."]
+[node name="PlayerShooter" type="Node2D" parent="."]
+script = ExtResource("4_wijdu")
+bullet = ExtResource("6_jno32")
 
-[node name="Anchor" type="Node2D" parent="PlayerMelee"]
+[node name="PlayerContacter" type="Node2D" parent="." node_paths=PackedStringArray("dash")]
+script = ExtResource("8_1mqaf")
+dash = NodePath("../Dash")
 
-[node name="Level1" type="Area2D" parent="PlayerMelee/Anchor"]
+[node name="PlayerTimer" type="Node2D" parent="."]
+script = ExtResource("9_y2gm2")
+MAX_TIME = 60.0
+INITIAL_TIME = 60.0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerMelee/Anchor/Level1"]
-polygon = PackedVector2Array(0, 0, 2, 1, 2, -1)
-disabled = true
+[node name="PlayerShootable" type="Node2D" parent="." node_paths=PackedStringArray("dash", "timeDropper")]
+script = ExtResource("10_hg03b")
+dash = NodePath("../Dash")
+timeDropper = NodePath("../TimeDropper")
 
-[node name="Level2" type="Area2D" parent="PlayerMelee/Anchor"]
+[node name="Dash" type="Node2D" parent="." node_paths=PackedStringArray("body", "controller", "movable", "afterimage")]
+script = ExtResource("11_o20x7")
+body = NodePath("..")
+controller = NodePath("../PlayerController")
+movable = NodePath("../Movable")
+afterimage = NodePath("Afterimage")
+distance = 100.0
+duration = 0.05
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerMelee/Anchor/Level2"]
-polygon = PackedVector2Array(2, 1, 2, -1, 4, -2, 4, 2)
-disabled = true
+[node name="Afterimage" parent="Dash" node_paths=PackedStringArray("visualsRoot") instance=ExtResource("11_ns1gc")]
+visualsRoot = NodePath("../../AnimatedSprite2D")
 
-[node name="Level3" type="Area2D" parent="PlayerMelee/Anchor"]
+[node name="TimeDropper" parent="." instance=ExtResource("12_5mt7w")]
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="PlayerMelee/Anchor/Level3"]
-polygon = PackedVector2Array(4, -2, 4, 2, 6, 3, 6, -3)
-disabled = true
+[node name="PlayerController" type="Node2D" parent="."]
+script = ExtResource("2_kqu1f")
 
-[node name="Collidable" parent="." instance=ExtResource("8_3fppw")]
+[node name="PlayerScore" type="Node2D" parent="."]
+script = ExtResource("14_xx7h8")
 
-[connection signal="OnPlayerChargeGun" from="Controller" to="CreateProjectile" method="onCharge"]
-[connection signal="OnPlayerFireGun" from="Controller" to="CreateProjectile" method="onFire"]
+[connection signal="OnPlayerChargeGun" from="PlayerController" to="PlayerShooter" method="onCharge"]
+[connection signal="OnPlayerDash" from="PlayerController" to="Dash" method="onDash"]
+[connection signal="OnPlayerFireGun" from="PlayerController" to="PlayerShooter" method="onFire"]
+[connection signal="OnPlayerMove" from="PlayerController" to="Movable" method="move"]

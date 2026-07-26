@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://bucejtjdoyltu"]
+
+[ext_resource type="Script" path="res://Scripts/TimeDropper.cs" id="1_h8uvc"]
+[ext_resource type="PackedScene" uid="uid://ca478ev3bjx03" path="res://Prefabs/time_orb.tscn" id="2_myhf0"]
+
+[sub_resource type="Curve" id="Curve_yd716"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_p8jov"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="TimeDropper" type="Node2D"]
+script = ExtResource("1_h8uvc")
+timeOrbPrefab = ExtResource("2_myhf0")
+divergenceSampler = SubResource("Curve_yd716")
+curlSampler = SubResource("Curve_p8jov")

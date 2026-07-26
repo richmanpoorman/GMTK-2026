@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://ca478ev3bjx03"]
+
+[ext_resource type="Script" path="res://Scripts/TimeOrb.cs" id="1_35ao5"]
+[ext_resource type="Script" path="res://Scripts/Movable.cs" id="2_klo6w"]
+
+[sub_resource type="Curve" id="Curve_88w7a"]
+min_value = 1.0
+max_value = 3.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 3), 2.8, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_87p03"]
+radius = 8.0
+
+[sub_resource type="Gradient" id="Gradient_nxsoe"]
+offsets = PackedFloat32Array(0.0194805, 0.590909, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0.447059, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_y04r4"]
+gradient = SubResource("Gradient_nxsoe")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="TimeOrb" type="CharacterBody2D" node_paths=PackedStringArray("movable")]
+collision_layer = 6
+script = ExtResource("1_35ao5")
+movable = NodePath("Mover")
+sizeFunction = SubResource("Curve_88w7a")
+maxSizeRange = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_87p03")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture = SubResource("GradientTexture2D_y04r4")
+
+[node name="Mover" type="Node2D" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("2_klo6w")
+body = NodePath("..")

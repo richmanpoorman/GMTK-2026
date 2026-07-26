@@ -16,14 +16,17 @@ public partial class ProjectileSpawner : Node2D
 
 	public AnimationTree animator;
 	
-	private Shooter shooter; 
+	private float[] stageLengths; 
 
     public override void _Ready()
     {
         bulletSpawnPoint.Position = new Vector2(SPAWNPOINT_RADIUS, 0); 
 		animator = bulletSpawnPoint.GetNode<AnimationTree>("AnimationTree");
-		if (GetParent<Node2D>() is Shooter _shooter) shooter = _shooter;  
-		else Assert.Failed("The parent of a projectile spawner is NOT a shooter"); 
+		float stage1length = animator.GetAnimation("stage_1").Length; 
+		float stage2length = animator.GetAnimation("stage_2").Length; 
+		float stage3length = animator.GetAnimation("stage_3").Length; 
+		
+		stageLengths = new float[] {stage1length, stage2length, stage3length}; 
     }
 
 
@@ -39,14 +42,29 @@ public partial class ProjectileSpawner : Node2D
 		bulletAnchorPoint.Rotation = directionVector.Angle(); 
 	}
 
-	public Bullet spawnProjectile()
+	public void spawnProjectile(ProjectileNode projectile)
 	{
 
-		Bullet bullet = shooter.createProjectile(); 
-		bullet.Position = bulletSpawnPoint.GlobalPosition; 
-		bullet.Rotation = bulletSpawnPoint.GlobalRotation;
-		GetTree().CurrentScene.AddChild(bullet);
-		return bullet; 
+		projectile.Position = bulletSpawnPoint.GlobalPosition; 
+		projectile.Rotation = bulletSpawnPoint.GlobalRotation;
+		GetTree().CurrentScene.AddChild(projectile);
 	}
 
+	public void chargeAnimation(float[] stageDurations)
+	{
+		for (int stage = 1; stage <= 3; stage++)
+		{
+			int stageIndex = stage - 1;
+			string timescalePath = "parameters/stage_" + stage +"_time_scale/scale"; 
+			float scaleFactor = stageDurations[stageIndex] / stageLengths[stageIndex];
+			animator.Set(timescalePath, scaleFactor);
+		}
+		animator.Set("parameters/transition/transition_request", "charge"); 
+	} 
+
+	public void fireAnimation()
+	{
+		animator.Set("parameters/transition/transition_request", "fire");
+		animator.Set("parameters/charge_state/transition_request", "stage_1");
+	}
 }

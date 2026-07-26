@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdix1oebrwjf0"]
+
+[ext_resource type="PackedScene" uid="uid://co71h4ca2f5cr" path="res://Prefabs/clock.tscn" id="1_i131e"]
+[ext_resource type="Script" path="res://Scripts/Overlay.cs" id="1_seaqg"]
+
+[node name="Overlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_seaqg")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 110.0
+grow_horizontal = 2
+color = Color(0.39, 0.256165, 0.1131, 1)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 99.0
+grow_horizontal = 2
+color = Color(0.59386, 0.69, 0.1656, 1)
+
+[node name="PlayerClock" parent="." instance=ExtResource("1_i131e")]
+layout_mode = 1
+offset_left = -66.0
+offset_top = 1.0
+offset_right = -899.0
+offset_bottom = -467.0
+
+[node name="TimeLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 10.0
+offset_right = 398.0
+offset_bottom = 93.0
+theme_override_colors/font_color = Color(0.413006, 0.193594, 0.0230618, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = -1
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 60
+text = "59.99"
+
+[node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 754.0
+offset_top = 16.0
+offset_right = 1143.0
+offset_bottom = 85.0
+theme_override_colors/font_color = Color(0.413006, 0.193594, 0.0230618, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 25
+text = "Score: 0"

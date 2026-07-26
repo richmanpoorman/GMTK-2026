@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic; 
 using System.Linq; 
-public partial class Collidable : Node2D
+public partial class CollidableDepreciated : Node2D
 {
 	
 	private List<string> canCollideWith;

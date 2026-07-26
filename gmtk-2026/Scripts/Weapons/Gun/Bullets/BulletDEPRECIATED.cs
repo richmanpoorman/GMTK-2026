@@ -48,7 +48,7 @@ public partial class BulletDEPRECIATED : CharacterBody2D
         collidable = GetNode<Collidable>("Collidable");
         timed      = GetNode<Timed>("Timed");
         timed.setTime(duration);
-        collidable.setCollideWith(canHit);
+        // collidable.setCollideWith(canHit);
     }
 
     public override void _PhysicsProcess(double deltaSeconds)
@@ -58,7 +58,7 @@ public partial class BulletDEPRECIATED : CharacterBody2D
         KinematicCollision2D collision = MoveAndCollide(moveStep); 
 
         if (collision == null) return; 
-        collidable.collision(collision); 
+        // collidable.collision(collision); 
 
     }
 

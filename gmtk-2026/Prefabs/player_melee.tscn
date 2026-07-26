@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://d343oux8dbuvg"]
+
+[node name="PlayerMelee" type="Node2D"]
+
+[node name="Anchor" type="Node2D" parent="."]
+
+[node name="Level1" type="Area2D" parent="Anchor"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Anchor/Level1"]
+polygon = PackedVector2Array(0, 0, 2, 1, 2, -1)
+disabled = true
+
+[node name="Level2" type="Area2D" parent="Anchor"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Anchor/Level2"]
+polygon = PackedVector2Array(2, 1, 2, -1, 4, -2, 4, 2)
+disabled = true
+
+[node name="Level3" type="Area2D" parent="Anchor"]
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Anchor/Level3"]
+polygon = PackedVector2Array(4, -2, 4, 2, 6, 3, 6, -3)
+disabled = true
