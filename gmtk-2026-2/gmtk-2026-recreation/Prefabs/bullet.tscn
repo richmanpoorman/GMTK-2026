@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://dd1l0xf8nhq1e"]
+
+[ext_resource type="Script" uid="uid://btby4xd7dwk6d" path="res://Scripts/Bullet.cs" id="1_m4f65"]
+[ext_resource type="Script" uid="uid://btlkp0j4qlx8y" path="res://Scripts/Raycaster.cs" id="2_tuf4i"]
+
+[sub_resource type="Animation" id="Animation_m4f65"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [10.0]
+}
+
+[sub_resource type="Animation" id="Animation_tuf4i"]
+resource_name = "bullet_fire"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:width")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.5, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1nxya"]
+_data = {
+&"RESET": SubResource("Animation_m4f65"),
+&"bullet_fire": SubResource("Animation_tuf4i")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m4f65"]
+animation = &"bullet_fire"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xp81c"]
+graph_offset = Vector2(-790.4275, 78.197174)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_m4f65")
+nodes/Animation/position = Vector2(-140, 120)
+node_connections = [&"output", 0, &"Animation"]
+
+[node name="Bullet" type="Node2D" unique_id=1174462207 node_paths=PackedStringArray("raycaster", "line")]
+script = ExtResource("1_m4f65")
+RANGE = 100.0
+raycaster = NodePath("Raycaster")
+line = NodePath("BulletVisual")
+
+[node name="Raycaster" type="Node" parent="." unique_id=1952660951 node_paths=PackedStringArray("ray", "body")]
+script = ExtResource("2_tuf4i")
+ray = NodePath("../RayCast2D")
+body = NodePath("..")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=2116771606]
+target_position = Vector2(50, 0)
+
+[node name="BulletVisual" type="Line2D" parent="." unique_id=1218062894]
+points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="BulletVisual" unique_id=1722036205]
+libraries/ = SubResource("AnimationLibrary_1nxya")
+
+[node name="AnimationTree" type="AnimationTree" parent="BulletVisual" unique_id=436282306]
+tree_root = SubResource("AnimationNodeBlendTree_xp81c")
+anim_player = NodePath("../AnimationPlayer")
+
+[connection signal="onRayHit" from="Raycaster" to="." method="onHit"]
+[connection signal="animation_finished" from="BulletVisual/AnimationPlayer" to="." method="onAnimationFinished"]

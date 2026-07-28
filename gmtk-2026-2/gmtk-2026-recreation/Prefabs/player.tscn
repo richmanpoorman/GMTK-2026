@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://ylqccrgj1v1d"]
+
+[ext_resource type="Script" uid="uid://bmb2opmqs4hct" path="res://Scripts/Player.cs" id="1_5wxv7"]
+[ext_resource type="Script" uid="uid://bobkgxiql1v1u" path="res://Scripts/Expirable.cs" id="2_y5hcb"]
+[ext_resource type="Script" uid="uid://bcgry0rxernp3" path="res://Scripts/Controller.cs" id="3_2nftw"]
+[ext_resource type="Script" uid="uid://b3tnomxyygyg2" path="res://Scripts/MovableCharacter.cs" id="4_2nftw"]
+[ext_resource type="Texture2D" uid="uid://be7l00j0h3eq1" path="res://icon.svg" id="5_knrd4"]
+[ext_resource type="Script" uid="uid://c8lefq72pvxqq" path="res://Scripts/SpriteSizer.cs" id="6_hck1p"]
+[ext_resource type="Script" uid="uid://b1i7sydm2hg01" path="res://Scripts/CreateSummonable.cs" id="7_4qbli"]
+[ext_resource type="PackedScene" uid="uid://bx0aag5rt1jq3" path="res://Prefabs/gun_anchor.tscn" id="8_4qbli"]
+[ext_resource type="PackedScene" uid="uid://dd1l0xf8nhq1e" path="res://Prefabs/bullet.tscn" id="8_08u7w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xp81c"]
+
+[node name="Player" type="CharacterBody2D" unique_id=739267981 node_paths=PackedStringArray("movableCharacter", "gun", "bulletMaker")]
+script = ExtResource("1_5wxv7")
+movableCharacter = NodePath("MovableCharacter")
+gun = NodePath("Gun")
+bulletMaker = NodePath("BulletMaker")
+
+[node name="PlayerSprite" type="Sprite2D" parent="." unique_id=1422577153]
+scale = Vector2(0.16238281, 0.16238281)
+texture = ExtResource("5_knrd4")
+region_rect = Rect2(0, 0, 10, 10)
+
+[node name="SpriteSizer" type="Node" parent="PlayerSprite" unique_id=246564446 node_paths=PackedStringArray("sprite")]
+script = ExtResource("6_hck1p")
+sprite = NodePath("..")
+size = Vector2(20.785, 20.785)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=333101172]
+shape = SubResource("CircleShape2D_xp81c")
+
+[node name="Expirable" type="Node" parent="." unique_id=301388724]
+script = ExtResource("2_y5hcb")
+
+[node name="Controller" type="Node" parent="." unique_id=441006294 node_paths=PackedStringArray("body")]
+script = ExtResource("3_2nftw")
+body = NodePath("..")
+
+[node name="MovableCharacter" type="Node" parent="." unique_id=1566211586 node_paths=PackedStringArray("body")]
+script = ExtResource("4_2nftw")
+body = NodePath("..")
+INITIAL_SPEED = 400.0
+
+[node name="BulletMaker" type="Node" parent="." unique_id=1513906562]
+script = ExtResource("7_4qbli")
+prefab = ExtResource("8_08u7w")
+
+[node name="Gun" parent="." unique_id=1208909272 instance=ExtResource("8_4qbli")]
+radius = 23.17
+
+[connection signal="onFaceDirection" from="Controller" to="." method="onLookAtDirection"]
+[connection signal="onFireStart" from="Controller" to="." method="onFire"]
+[connection signal="onMove" from="Controller" to="." method="onMove"]

@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://hxgdj7f0xqg5"]
+
+[ext_resource type="PackedScene" uid="uid://ylqccrgj1v1d" path="res://Prefabs/player.tscn" id="1_x87qo"]
+
+[node name="GameScene" type="Node2D" unique_id=1140452764]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1886673950]
+
+[node name="Player" parent="." unique_id=739267981 instance=ExtResource("1_x87qo")]

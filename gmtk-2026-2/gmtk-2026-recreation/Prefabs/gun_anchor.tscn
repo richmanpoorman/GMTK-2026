@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bx0aag5rt1jq3"]
+
+[ext_resource type="Script" uid="uid://c2msvdb8pebon" path="res://Scripts/Gun.cs" id="1_7q06n"]
+[ext_resource type="Script" uid="uid://bqg3rr8vfenjf" path="res://Scripts/Spawnpoint.cs" id="2_ssref"]
+[ext_resource type="Texture2D" uid="uid://be7l00j0h3eq1" path="res://icon.svg" id="3_20e08"]
+[ext_resource type="Script" uid="uid://c8lefq72pvxqq" path="res://Scripts/SpriteSizer.cs" id="4_ljh8s"]
+
+[node name="GunAnchor" type="Node2D" unique_id=1208909272 node_paths=PackedStringArray("spawnpoint", "visuals")]
+script = ExtResource("1_7q06n")
+spawnpoint = NodePath("Gun")
+visuals = NodePath("Display")
+
+[node name="Gun" type="Node2D" parent="." unique_id=1477673671]
+script = ExtResource("2_ssref")
+
+[node name="Display" type="Node2D" parent="." unique_id=1618090189]
+
+[node name="Sprite2D" type="Sprite2D" parent="Display" unique_id=901474152]
+scale = Vector2(0.0390625, 0.0390625)
+texture = ExtResource("3_20e08")
+
+[node name="Node" type="Node" parent="Display/Sprite2D" unique_id=899876355 node_paths=PackedStringArray("sprite")]
+script = ExtResource("4_ljh8s")
+sprite = NodePath("..")
+size = Vector2(5, 5)

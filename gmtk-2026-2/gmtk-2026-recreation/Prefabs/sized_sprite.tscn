@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://qkkhnhdknah5"]
+
+[ext_resource type="Texture2D" uid="uid://be7l00j0h3eq1" path="res://icon.svg" id="1_i5mgh"]
+[ext_resource type="Script" uid="uid://c8lefq72pvxqq" path="res://Scripts/SpriteSizer.cs" id="2_j5vbn"]
+
+[node name="PlayerSprite" type="Sprite2D" unique_id=882507043]
+scale = Vector2(0.16550781, 0.16550781)
+texture = ExtResource("1_i5mgh")
+region_rect = Rect2(0, 0, 10, 10)
+
+[node name="SpriteSizer" type="Node" parent="." unique_id=314664926 node_paths=PackedStringArray("sprite")]
+script = ExtResource("2_j5vbn")
+sprite = NodePath("..")
+size = Vector2(21.185, 21.185)
