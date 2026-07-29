@@ -5,25 +5,29 @@ public partial class Bullet : Node2D
 	[Export] 
 	public float RANGE = 10f;
 
+	[Export(PropertyHint.Layers2DPhysics)]
+	public uint COLLISION_MASK; 
 
 	[Export] 
 	private Raycaster raycaster; 
 
 	[Export]
 	private Line2D line;
-
-	[Signal]
-	public delegate void onBulletHitEventHandler(Node2D collider, Vector2 position, Vector2 normal); 
 	
+
+	private AttackData data; 
+
 	private void fire() => raycaster.cast(); 
 
-	private void onHit(Node2D collider, Vector2 position, Vector2 normal) => EmitSignal(SignalName.onBulletHit, collider, position, normal); 
+	private void onHit(Node2D collider, Vector2 position, Vector2 normal)
+	{
+		if (collider is Hurtbox hurtbox) hurtbox.hit(data, position, normal);
+		if (collider is null) return; 
+		Vector2 localPosition = position - this.GlobalPosition; 
+		setLinePoints(localPosition.Length());
+	}
 
 	private void finish() => QueueFree();
-
-	private void onAnimationFinished(StringName name) {
-		if (name == "bullet_fire") finish();
-	}
 
 	public void setRange(float range) {
 		raycaster.setLocalTarget(range * Vector2.Right);
@@ -44,9 +48,21 @@ public partial class Bullet : Node2D
 		}
 	}
 
+	public void setCollisionMask(uint collisionMask)
+	{
+		raycaster.ray.CollisionMask = collisionMask;
+	}
+
+	public void setAttackData(AttackData data)
+	{
+		this.data = data; 
+	}
+
     public override void _Ready()
     {
+		setCollisionMask(COLLISION_MASK);
         setRange(RANGE);
+		fire();
     }
 
 }

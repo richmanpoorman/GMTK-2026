@@ -12,8 +12,6 @@ public partial class Raycaster : Node
     [Signal]
     public delegate void onRayHitEventHandler(Node2D collider, Vector2 position, Vector2 normal); 
 
-    [Signal]
-    public delegate void onRayFinishCastingEventHandler(); 
 
     public void cast()
     {
@@ -21,7 +19,6 @@ public partial class Raycaster : Node
 
         if (!ray.IsColliding())
         {
-            EmitSignal(SignalName.onRayFinishCasting); 
             return;
         }
 
@@ -30,7 +27,6 @@ public partial class Raycaster : Node
         Vector2 normal   = ray.GetCollisionNormal(); 
 
         EmitSignal(SignalName.onRayHit, collider, position, normal);
-        EmitSignal(SignalName.onRayFinishCasting); 
     }
     
     public void setGlobalTarget(Vector2 target)

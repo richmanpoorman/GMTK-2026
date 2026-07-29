@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://d3gcen48p3m4r"]
+
+[ext_resource type="Script" uid="uid://beqa43piacigg" path="res://Scripts/DamageCalculator.cs" id="1_5jj1m"]
+
+[node name="DamageCalculator" type="Node" unique_id=1713914865 node_paths=PackedStringArray("expirable")]
+script = ExtResource("1_5jj1m")
+expirable = NodePath("")

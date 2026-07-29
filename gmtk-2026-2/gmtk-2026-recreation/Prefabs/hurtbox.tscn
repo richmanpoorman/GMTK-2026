@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://b27nnm5fsnebr"]
+
+[ext_resource type="Script" uid="uid://c5l3mhrjv0qqo" path="res://Scripts/Hurtbox.cs" id="1_roc1j"]
+[ext_resource type="Script" uid="uid://dihr6laepog0q" path="res://Scripts/ShapeDrawer.cs" id="2_u2frl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u2frl"]
+resource_local_to_scene = true
+
+[node name="Hurtbox" type="Area2D" unique_id=1638758940 node_paths=PackedStringArray("collider", "shapeDrawer")]
+collision_layer = 6
+collision_mask = 0
+script = ExtResource("1_roc1j")
+collider = NodePath("Collision")
+hurtboxShape = SubResource("RectangleShape2D_u2frl")
+shapeDrawer = NodePath("ColliderDrawer")
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=581461427]
+shape = SubResource("RectangleShape2D_u2frl")
+
+[node name="ColliderDrawer" type="Node2D" parent="." unique_id=609721218]
+script = ExtResource("2_u2frl")

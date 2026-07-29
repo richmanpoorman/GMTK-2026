@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://bia2o2n4j26a5"]
+
+[ext_resource type="Texture2D" uid="uid://be7l00j0h3eq1" path="res://icon.svg" id="1_hmetb"]
+[ext_resource type="Script" uid="uid://cr612wdu1ex5f" path="res://Scripts/StaticEnemy.cs" id="1_ipe26"]
+[ext_resource type="PackedScene" uid="uid://dkenk7olorflk" path="res://Prefabs/sprite_sizer.tscn" id="2_wpgud"]
+[ext_resource type="PackedScene" uid="uid://b27nnm5fsnebr" path="res://Prefabs/hurtbox.tscn" id="3_5gq0v"]
+[ext_resource type="PackedScene" uid="uid://bqtfecbh2ksa8" path="res://Prefabs/expirable.tscn" id="4_8hol8"]
+[ext_resource type="PackedScene" uid="uid://d3gcen48p3m4r" path="res://Prefabs/damage_calculator.tscn" id="5_2qwxd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ipe26"]
+resource_local_to_scene = true
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xp81c"]
+size = Vector2(30, 30)
+
+[node name="StaticEnemy" type="StaticBody2D" unique_id=1663304188 node_paths=PackedStringArray("damageCalculator", "expirable")]
+script = ExtResource("1_ipe26")
+damageCalculator = NodePath("DamageCalculator")
+expirable = NodePath("Expirable")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=192701198]
+scale = Vector2(0.234375, 0.234375)
+texture = ExtResource("1_hmetb")
+
+[node name="SpriteSizer" parent="Sprite2D" unique_id=1058004183 node_paths=PackedStringArray("sprite") instance=ExtResource("2_wpgud")]
+sprite = NodePath("..")
+size = Vector2(30, 30)
+
+[node name="Expirable" parent="." unique_id=1513443127 instance=ExtResource("4_8hol8")]
+START_TIME = 100.0
+MAX_TIME = 1000.0
+
+[node name="DamageCalculator" parent="." unique_id=1713914865 node_paths=PackedStringArray("expirable") instance=ExtResource("5_2qwxd")]
+expirable = NodePath("../Expirable")
+
+[node name="Hurtbox" parent="." unique_id=1638758940 instance=ExtResource("3_5gq0v")]
+collision_layer = 10
+hurtboxShape = SubResource("RectangleShape2D_ipe26")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1835509825]
+shape = SubResource("RectangleShape2D_xp81c")
+
+[connection signal="onExpired" from="Expirable" to="." method="onTimeout"]
+[connection signal="onHit" from="Hurtbox" to="." method="onHit"]

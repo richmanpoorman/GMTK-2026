@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://dkenk7olorflk"]
+
+[ext_resource type="Script" uid="uid://c8lefq72pvxqq" path="res://Scripts/SpriteSizer.cs" id="1_xs6ws"]
+
+[node name="SpriteSizer" type="Node" unique_id=1058004183 node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_xs6ws")
+sprite = NodePath("")
+size = Vector2(20.785, 20.785)

@@ -13,12 +13,6 @@ public partial class Expirable : Node
     public double time {get; set;}
     public double maxTime {get; set;}
 
-    public Expirable()
-    {
-        time    = START_TIME; 
-        maxTime = MAX_TIME; 
-    }
-
     public double decreaseTime(double seconds) 
     {
         time -= seconds; 
@@ -48,6 +42,11 @@ public partial class Expirable : Node
     private void onExpire()
     {
         EmitSignal(SignalName.onExpired); 
+    }
+    public override void _Ready()
+    {
+        time    = START_TIME; 
+        maxTime = MAX_TIME; 
     }
 
     public override void _Process(double delta)

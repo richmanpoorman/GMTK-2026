@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" uid="uid://btby4xd7dwk6d" path="res://Scripts/Bullet.cs" id="1_m4f65"]
 [ext_resource type="Script" uid="uid://btlkp0j4qlx8y" path="res://Scripts/Raycaster.cs" id="2_tuf4i"]
+[ext_resource type="AnimationLibrary" uid="uid://hxqtf8knru4k" path="res://Art/Animations/bullet_animations.res" id="3_iohxx"]
+[ext_resource type="Script" uid="uid://dt6oodtrhdou1" path="res://Scripts/SetAnimatorStart.cs" id="3_tuf4i"]
+[ext_resource type="Script" uid="uid://sy7f37mk2hiw" path="res://Scripts/AnimationFinishSignaler.cs" id="4_1nxya"]
 
-[sub_resource type="Animation" id="Animation_m4f65"]
+[sub_resource type="Animation" id="Animation_iohxx"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -15,43 +18,44 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [10.0]
+"values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_tuf4i"]
-resource_name = "bullet_fire"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:width")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.1),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [0.0, 0.5, 1.0, 0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_1nxya"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1sxh4"]
 _data = {
-&"RESET": SubResource("Animation_m4f65"),
-&"bullet_fire": SubResource("Animation_tuf4i")
+&"RESET": SubResource("Animation_iohxx")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_m4f65"]
-animation = &"bullet_fire"
+animation = &"bullet/bullet_fire"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tuf4i"]
+animation = &"bullet/idle"
+
+[sub_resource type="AnimationNodeTransition" id="AnimationNodeTransition_m4f65"]
+input_0/name = "bullet_fire"
+input_0/auto_advance = true
+input_0/break_loop_at_end = false
+input_0/reset = true
+input_1/name = "idle"
+input_1/auto_advance = false
+input_1/break_loop_at_end = false
+input_1/reset = true
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_xp81c"]
-graph_offset = Vector2(-790.4275, 78.197174)
-nodes/Animation/node = SubResource("AnimationNodeAnimation_m4f65")
-nodes/Animation/position = Vector2(-140, 120)
-node_connections = [&"output", 0, &"Animation"]
+graph_offset = Vector2(-597.4135, 41.76851)
+nodes/bullet_fire/node = SubResource("AnimationNodeAnimation_m4f65")
+nodes/bullet_fire/position = Vector2(-220, 120)
+nodes/transition/node = SubResource("AnimationNodeTransition_m4f65")
+nodes/transition/position = Vector2(80, 140)
+nodes/idle/node = SubResource("AnimationNodeAnimation_tuf4i")
+nodes/idle/position = Vector2(-200, 300)
+node_connections = [&"output", 0, &"transition", &"transition", 0, &"bullet_fire", &"transition", 1, &"idle"]
 
 [node name="Bullet" type="Node2D" unique_id=1174462207 node_paths=PackedStringArray("raycaster", "line")]
 script = ExtResource("1_m4f65")
 RANGE = 100.0
+COLLISION_MASK = 8
 raycaster = NodePath("Raycaster")
 line = NodePath("BulletVisual")
 
@@ -62,16 +66,35 @@ body = NodePath("..")
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=2116771606]
 target_position = Vector2(50, 0)
+collision_mask = 10
+collide_with_areas = true
 
 [node name="BulletVisual" type="Line2D" parent="." unique_id=1218062894]
 points = PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0)
+width = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="BulletVisual" unique_id=1722036205]
-libraries/ = SubResource("AnimationLibrary_1nxya")
+libraries/ = SubResource("AnimationLibrary_1sxh4")
+libraries/bullet = ExtResource("3_iohxx")
+autoplay = &"bullet/bullet_fire"
 
 [node name="AnimationTree" type="AnimationTree" parent="BulletVisual" unique_id=436282306]
 tree_root = SubResource("AnimationNodeBlendTree_xp81c")
 anim_player = NodePath("../AnimationPlayer")
+parameters/transition/current_state = "idle"
+parameters/transition/transition_request = ""
+parameters/transition/current_index = 1
+
+[node name="SetAnimatorStart" type="Node" parent="BulletVisual/AnimationTree" unique_id=1294114388 node_paths=PackedStringArray("animator")]
+script = ExtResource("3_tuf4i")
+initialAnimation = &"bullet_fire"
+animator = NodePath("..")
+
+[node name="AnimationFinishSignaler" type="Node" parent="BulletVisual/AnimationTree" unique_id=388574748 node_paths=PackedStringArray("animationTree")]
+script = ExtResource("4_1nxya")
+animation = &"bullet/bullet_fire"
+animationTree = NodePath("..")
 
 [connection signal="onRayHit" from="Raycaster" to="." method="onHit"]
-[connection signal="animation_finished" from="BulletVisual/AnimationPlayer" to="." method="onAnimationFinished"]
+[connection signal="animation_finished" from="BulletVisual/AnimationTree" to="BulletVisual/AnimationTree/AnimationFinishSignaler" method="_on_animation_tree_animation_finished"]
+[connection signal="onAnimationFinished" from="BulletVisual/AnimationTree/AnimationFinishSignaler" to="." method="finish"]

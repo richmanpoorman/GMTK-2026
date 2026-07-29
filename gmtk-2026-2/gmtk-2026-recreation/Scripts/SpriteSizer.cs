@@ -6,17 +6,7 @@ public partial class SpriteSizer : Node
 {
 
     [Export]
-    public Sprite2D sprite
-    {
-        get => _sprite; 
-        set
-        {
-            if (_sprite is not null && _sprite.Texture is not null) _sprite.Texture.Changed -= updateSpriteSize; 
-            _sprite = value; 
-            if (_sprite is not null && _sprite.Texture is not null) _sprite.Texture.Changed += updateSpriteSize; 
-            updateSpriteSize(); 
-        }
-    }
+    public Sprite2D sprite; 
 
     [Export(PropertyHint.Link)]
     public Vector2 size
@@ -30,8 +20,6 @@ public partial class SpriteSizer : Node
     }
 
     private Vector2 _spriteDimensions = Vector2.Zero; 
-    private Sprite2D _sprite; 
-
     private void updateSpriteSize()
     {
         if (sprite is null || sprite.Texture is null || _spriteDimensions.IsZeroApprox()) return; 
@@ -44,9 +32,5 @@ public partial class SpriteSizer : Node
 
     }
 
-    public override void _ExitTree()
-    {
-        if (_sprite is not null && _sprite.Texture is not null) _sprite.Texture.Changed -= updateSpriteSize; 
-    }
 
 }

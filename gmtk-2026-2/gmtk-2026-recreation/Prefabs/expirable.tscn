@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bqtfecbh2ksa8"]
+
+[ext_resource type="Script" uid="uid://bobkgxiql1v1u" path="res://Scripts/Expirable.cs" id="1_1pclt"]
+
+[node name="Expirable" type="Node" unique_id=1513443127]
+script = ExtResource("1_1pclt")

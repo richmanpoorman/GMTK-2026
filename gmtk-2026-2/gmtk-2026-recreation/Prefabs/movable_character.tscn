@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c4d2voc3x08r0"]
+
+[ext_resource type="Script" uid="uid://b3tnomxyygyg2" path="res://Scripts/MovableCharacter.cs" id="1_sxmtv"]
+
+[node name="MovableCharacter" type="Node" unique_id=1812960610 node_paths=PackedStringArray("body")]
+script = ExtResource("1_sxmtv")
+body = NodePath("")
+INITIAL_SPEED = 400.0
