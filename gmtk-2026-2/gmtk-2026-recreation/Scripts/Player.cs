@@ -19,6 +19,9 @@ public partial class Player : CharacterBody2D
     private double damage = 1f;
 
 
+    [Signal]
+    public delegate void onGameOverEventHandler(); 
+
     private AttackData attackData; 
 
     private void onMove(Vector2 direction) => movableCharacter.moveTowards(direction);
@@ -36,6 +39,7 @@ public partial class Player : CharacterBody2D
     private void onTimeout()
     {
         GD.Print("I have no more time..."); 
+        EmitSignal(SignalName.onGameOver); 
     }
 
     public override void _Ready()

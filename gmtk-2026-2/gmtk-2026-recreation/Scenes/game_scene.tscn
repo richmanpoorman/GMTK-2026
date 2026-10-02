@@ -1,7 +1,32 @@
-[gd_scene format=3 uid="uid://hxgdj7f0xqg5"]
+[gd_scene format=4 uid="uid://hxgdj7f0xqg5"]
 
 [ext_resource type="PackedScene" uid="uid://ylqccrgj1v1d" path="res://Prefabs/player.tscn" id="1_x87qo"]
 [ext_resource type="PackedScene" uid="uid://bia2o2n4j26a5" path="res://Prefabs/static_enemy.tscn" id="2_b6fju"]
+[ext_resource type="Texture2D" uid="uid://be7l00j0h3eq1" path="res://icon.svg" id="3_6h5vk"]
+[ext_resource type="PackedScene" uid="uid://dkenk7olorflk" path="res://Prefabs/sprite_sizer.tscn" id="4_1ixah"]
+[ext_resource type="PackedScene" uid="uid://b27nnm5fsnebr" path="res://Prefabs/hurtbox.tscn" id="5_rgj8m"]
+[ext_resource type="Script" uid="uid://dy3fk4o5vuoej" path="res://Scripts/EnemyMovementBounce.cs" id="6_rgj8m"]
+[ext_resource type="PackedScene" uid="uid://c4d2voc3x08r0" path="res://Prefabs/movable_character.tscn" id="7_ikfsv"]
+[ext_resource type="PackedScene" uid="uid://bqtfecbh2ksa8" path="res://Prefabs/expirable.tscn" id="8_5dgvu"]
+[ext_resource type="PackedScene" uid="uid://d3gcen48p3m4r" path="res://Prefabs/damage_calculator.tscn" id="9_uscyt"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fiftr"]
+resource_name = "temp"
+texture = ExtResource("3_6h5vk")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
+
+[sub_resource type="TileSet" id="TileSet_iq4jt"]
+tile_size = Vector2i(128, 128)
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_fiftr")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ikfsv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2fmhe"]
+resource_local_to_scene = true
 
 [node name="GameScene" type="Node2D" unique_id=1140452764]
 
@@ -11,3 +36,40 @@
 
 [node name="StaticEnemy" parent="." unique_id=1663304188 instance=ExtResource("2_b6fju")]
 position = Vector2(81, -41)
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=2030629032]
+tile_map_data = PackedByteArray("AAD7//3/AAAAAAAAAAD7//7/AAAAAAAAAAD7////AAAAAAAAAAD7/wAAAAAAAAAAAAD7/wEAAAAAAAAAAAD7/wIAAAAAAAAAAAD8/wIAAAAAAAAAAAD9/wIAAAAAAAAAAAD+/wIAAAAAAAAAAAD//wIAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAACAAIAAAAAAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAEAAEAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAP//AAAAAAAAAAAEAP7/AAAAAAAAAAAEAP3/AAAAAAAAAAADAP3/AAAAAAAAAAACAP3/AAAAAAAAAAABAP3/AAAAAAAAAAAAAP3/AAAAAAAAAAD///3/AAAAAAAAAAD+//3/AAAAAAAAAAD9//3/AAAAAAAAAAD8//3/AAAAAAAAAAA=")
+tile_set = SubResource("TileSet_iq4jt")
+
+[node name="BouncingEnemy" type="CharacterBody2D" parent="." unique_id=2100071767]
+position = Vector2(159, -26)
+
+[node name="Sprite2D" type="Sprite2D" parent="BouncingEnemy" unique_id=1334985813]
+scale = Vector2(0.15625, 0.15625)
+texture = ExtResource("3_6h5vk")
+
+[node name="SpriteSizer" parent="BouncingEnemy/Sprite2D" unique_id=1058004183 node_paths=PackedStringArray("sprite") instance=ExtResource("4_1ixah")]
+sprite = NodePath("..")
+size = Vector2(20, 20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BouncingEnemy" unique_id=1648402711]
+shape = SubResource("RectangleShape2D_ikfsv")
+
+[node name="Hurtbox" parent="BouncingEnemy" unique_id=1638758940 instance=ExtResource("5_rgj8m")]
+collision_layer = 10
+hurtboxShape = SubResource("RectangleShape2D_2fmhe")
+
+[node name="EnemyMovementBounce" type="Node" parent="BouncingEnemy" unique_id=1315111392 node_paths=PackedStringArray("body")]
+script = ExtResource("6_rgj8m")
+body = NodePath("..")
+
+[node name="MovableCharacter" parent="BouncingEnemy" unique_id=1812960610 node_paths=PackedStringArray("body") instance=ExtResource("7_ikfsv")]
+body = NodePath("..")
+INITIAL_SPEED = 200.0
+INITIAL_DIRECTION = Vector2(1, 1)
+movementType = 1
+
+[node name="Expirable" parent="BouncingEnemy" unique_id=1513443127 instance=ExtResource("8_5dgvu")]
+
+[node name="DamageCalculator" parent="BouncingEnemy" unique_id=1713914865 node_paths=PackedStringArray("expirable") instance=ExtResource("9_uscyt")]
+expirable = NodePath("../Expirable")

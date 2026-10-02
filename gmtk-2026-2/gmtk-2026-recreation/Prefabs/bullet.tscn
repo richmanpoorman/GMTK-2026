@@ -54,8 +54,8 @@ node_connections = [&"output", 0, &"transition", &"transition", 0, &"bullet_fire
 
 [node name="Bullet" type="Node2D" unique_id=1174462207 node_paths=PackedStringArray("raycaster", "line")]
 script = ExtResource("1_m4f65")
-RANGE = 100.0
-COLLISION_MASK = 8
+RANGE = 1000.0
+COLLISION_MASK = 10
 raycaster = NodePath("Raycaster")
 line = NodePath("BulletVisual")
 
